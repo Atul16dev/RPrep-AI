@@ -1,15 +1,13 @@
 import axios from 'axios';
 
+// In production, an empty base URL keeps /api requests on the frontend origin.
 const apiBaseURL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:3000" : "")
 
 const api = axios.create({
     baseURL: apiBaseURL,
+    // Include the HttpOnly session cookie for protected report endpoints.
     withCredentials: true,
 })
-
-/**
- * @description generate new interview report based of user resume, self description and job description
- */
 
 export const generateInterviewReport = async ({jobDescription, selfDescription, resumeFile}) => {
 
@@ -22,16 +20,10 @@ export const generateInterviewReport = async ({jobDescription, selfDescription, 
 
     return response.data
 }
-/**@description Retrieves an interview report by its ID */
-
 export const getInterviewReportById = async (interviewId) => {
     const response = await api.get(`/api/interview/${interviewId}`)
     return response.data
 }
-
-/**
- * @description Retrieves all interview reports for the authenticated user
- */
 
 export const getAllInterviewReports = async ({ page = 1, limit = 20 } = {}) => {
     const response = await api.get("/api/interview/", {

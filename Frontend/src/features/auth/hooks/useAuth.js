@@ -167,6 +167,7 @@ const handleResendRegistrationOtp = async ({ email }) => {
 
     useEffect(()=>{
 
+        // Restore authentication state from the HttpOnly cookie, which browser JavaScript cannot read.
         const getAndSetUser = async()=>{
             
             try {
@@ -189,6 +190,7 @@ const handleResendRegistrationOtp = async ({ email }) => {
   setLoading(true);
 
   try {
+    // The backend verifies the provider-issued credential against the configured OAuth client.
     const data = await googleLogin(credential);
     setUser(data.user);
     return true;

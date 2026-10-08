@@ -7,18 +7,14 @@ export default function HeroSection() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Event handler for "Generate My Report" button
   const handleGenerateReport = () => {
     if (user) {
-      // If user is logged in, go to dashboard
       navigate("/dashboard");
     } else {
-      // If user is NOT logged in, go to registration
       navigate("/register");
     }
   };
 
-  // Event handler for "See How It Works" button
   const handleSeeHowItWorks = () => {
     const element = document.getElementById("how-it-works");
     if (element) {
@@ -35,23 +31,19 @@ export default function HeroSection() {
             <span>AI POWERED INTERVIEW PREPARATION</span>
           </div>
 
-          {/* Main Headline */}
           <h1 className="hero-title">
             Prepare Smarter.
             <br />
             <span className="hero-accent">Interview Better.</span>
           </h1>
 
-          {/* Description */}
           <p className="hero-description">
             Upload your resume, job description and self description to get a
             personalized AI-powered interview report designed around your role
             and experience.
           </p>
 
-          {/* Buttons Container */}
           <div className="hero-buttons">
-            {/* Primary Button - Generate Report */}
             <button
               className="button primary-button"
               onClick={handleGenerateReport}
@@ -59,7 +51,6 @@ export default function HeroSection() {
               Generate My Report
             </button>
 
-            {/* Secondary Button - See How It Works */}
             <button
               className="button secondary-button"
               onClick={handleSeeHowItWorks}

@@ -10,6 +10,7 @@ async function authUser(req, res, next){
         })
 }
 
+// The blacklist check allows logout to revoke JWTs before their expiration.
 const  isTokenBlacklisted = await tokenBlacklistModel.findOne({
     token
 })
@@ -21,6 +22,7 @@ if(isTokenBlacklisted){
 }
 
 try {
+    // Validate the signature and expiry before exposing token claims to protected routes.
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
     req.user = decoded

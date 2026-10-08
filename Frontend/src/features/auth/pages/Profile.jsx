@@ -33,14 +33,12 @@ const ProfilePage = () => {
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Validate file type
       if (!file.type.startsWith("image/")) {
         setProfileMessage("Please select a valid image file.");
         e.target.value = "";
         return;
       }
 
-      // Validate file size (5MB)
       if (file.size > 5 * 1024 * 1024) {
         setProfileMessage("This image is too large. Please choose an image under 5 MB.");
         e.target.value = "";
@@ -50,7 +48,7 @@ const ProfilePage = () => {
       setProfileMessage("");
       setSelectedFile(file);
 
-      // Create preview URL
+      // Preview the image locally; the selected file is uploaded only when the profile is saved.
       const reader = new FileReader();
       reader.onload = (event) => {
         setPreviewURL(event.target.result);
@@ -84,7 +82,6 @@ const ProfilePage = () => {
     setSaving(false);
 
     if (result.success) {
-      // Update local state with new values from server response
       const updatedUser = result.data.user;
       setPhotoURL(updatedUser.photoURL || "");
       setPreviewURL(updatedUser.photoURL || "");
@@ -128,7 +125,6 @@ const ProfilePage = () => {
         </div>
       )}
 
-      {/* Profile Avatar Section */}
       <div
         className="profile-avatar-section"
       >
@@ -176,7 +172,6 @@ const ProfilePage = () => {
         )}
       </div>
 
-      {/* Display Name Field */}
       <div className="profile-field">
         <label htmlFor="display-name">
           Display Name
@@ -190,7 +185,6 @@ const ProfilePage = () => {
         />
       </div>
 
-      {/* Email Field (Read-only) */}
       <div className="profile-field profile-email-field">
         <label htmlFor="profile-email">
           Email
@@ -205,7 +199,6 @@ const ProfilePage = () => {
         />
       </div>
 
-      {/* Action Buttons */}
       <div className="profile-actions">
         <button
           type="button"

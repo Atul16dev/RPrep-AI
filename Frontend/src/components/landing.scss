@@ -1,7 +1,4 @@
 
-// ================================
-// NAVBAR STYLING
-// ================================
 
 .navbar {
   width: 100%;
@@ -54,9 +51,6 @@
   }
 }
 
-// ================================
-// NAVBAR MENU & NAVIGATION
-// ================================
 
 .navbar-menu {
   display: flex;
@@ -97,9 +91,6 @@
   }
 }
 
-// ================================
-// NAVBAR ACTIONS (Buttons)
-// ================================
 
 .navbar-actions {
   display: flex;
@@ -502,9 +493,6 @@
 }
 
 
-// ================================
-// ANIMATED HAMBURGER MENU
-// ================================
 
 #navbar-toggle {
   display: none;
@@ -545,7 +533,6 @@
   top: 28px;
 }
 
-// Hamburger animations - create X shape
 #navbar-toggle:checked + .hamburger .top-bun {
   transform: translateY(7px) rotate(45deg);
 }
@@ -562,7 +549,6 @@
   background-color: #7dd3fc;
 }
 
-// Mobile navigation menu - Side drawer
 .nav {
   position: fixed;
   top: 0;
@@ -588,14 +574,13 @@
   will-change: transform, opacity;
 }
 
-// Show menu when checkbox is checked - using general sibling selector
+// The checkbox controls the mobile menu through the general sibling selector.
 #navbar-toggle:checked ~ .nav {
   transform: translate3d(0, 0, 0);
   pointer-events: auto;
   opacity: 1;
 }
 
-// Menu backdrop overlay
 .nav-backdrop {
   position: fixed;
   top: 0;
@@ -776,9 +761,6 @@ nav a:hover:before {
   height: 100%;
 }
 
-// ================================
-// RESPONSIVE: HIDE DESKTOP, SHOW MOBILE
-// ================================
 
 @media (max-width: 768px) {
   .navbar {
@@ -839,9 +821,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// HERO SECTION STYLING
-// ================================
 
 .landing-page .hero-section {
   width: 100%;
@@ -851,7 +830,6 @@ nav a:hover:before {
   justify-content: center;
   padding: 2rem;
   
-  // Gradient background with modern colors
   background: linear-gradient(
     135deg,
     #0f172a 0%,
@@ -859,11 +837,9 @@ nav a:hover:before {
     #312e81 100%
   );
   
-  // Add subtle overlay pattern effect
   position: relative;
   overflow: hidden;
 
-  // Optional: Add animated background elements
   &::before {
     content: "";
     position: absolute;
@@ -913,9 +889,6 @@ nav a:hover:before {
   animation: fadeInUp 0.8s ease-out;
 }
 
-// ================================
-// HERO TITLE STYLING
-// ================================
 
 .landing-page .hero-title {
   font-size: clamp(2.5rem, 8vw, 4.5rem);
@@ -923,7 +896,6 @@ nav a:hover:before {
   line-height: 1.2;
   margin: 0;
   
-  // Gradient text effect
   background: linear-gradient(
     135deg,
     #ffffff 0%,
@@ -936,7 +908,6 @@ nav a:hover:before {
   
   letter-spacing: -0.5px;
   
-  // Add glow effect
   text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   
   br {
@@ -945,9 +916,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// HERO DESCRIPTION STYLING
-// ================================
 
 .landing-page .hero-description {
   font-size: clamp(1rem, 2vw, 1.25rem);
@@ -961,9 +929,6 @@ nav a:hover:before {
   letter-spacing: 0.3px;
 }
 
-// ================================
-// BUTTONS CONTAINER & STYLING
-// ================================
 
 .landing-page .hero-buttons {
   display: flex;
@@ -983,7 +948,6 @@ nav a:hover:before {
   }
 }
 
-// Secondary button styling (new)
 .landing-page .secondary-button {
   background: transparent;
   color: #60a5fa;
@@ -1015,9 +979,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// ANIMATIONS
-// ================================
 
 @keyframes fadeInUp {
   from {
@@ -1030,9 +991,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// RESPONSIVE DESIGN
-// ================================
 
 @media (max-width: 768px) {
   .landing-page .navbar-logo,
@@ -1103,9 +1061,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// FEATURES SECTION STYLING
-// ================================
 
 .features-section {
   width: 100%;
@@ -1136,9 +1091,6 @@ nav a:hover:before {
   line-height: 1.6;
 }
 
-// ================================
-// FEATURES GRID & CARDS
-// ================================
 
 .features-grid {
   display: grid;
@@ -1197,9 +1149,6 @@ nav a:hover:before {
   margin: 0;
 }
 
-// ================================
-// FEATURES RESPONSIVE DESIGN
-// ================================
 
 @media (max-width: 1024px) {
   .features-grid {
@@ -1301,9 +1250,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// HOW IT WORKS SECTION STYLING
-// ================================
 
 .how-it-works-section {
   width: 100%;
@@ -1334,9 +1280,6 @@ nav a:hover:before {
   line-height: 1.6;
 }
 
-// ================================
-// STEPS GRID & CARDS
-// ================================
 
 .steps-grid {
   display: grid;
@@ -1447,9 +1390,6 @@ nav a:hover:before {
   margin: 0;
 }
 
-// ================================
-// HOW IT WORKS RESPONSIVE DESIGN
-// ================================
 
 @media (max-width: 1024px) {
   .steps-grid {
@@ -1557,9 +1497,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// REPORT PREVIEW SECTION STYLING
-// ================================
 
 .report-preview-section {
   width: 100%;
@@ -1590,9 +1527,6 @@ nav a:hover:before {
   line-height: 1.6;
 }
 
-// ================================
-// REPORT FLOW WITH ARROWS
-// ================================
 
 .report-flow {
   display: flex;
@@ -1660,9 +1594,6 @@ nav a:hover:before {
   min-width: 30px;
 }
 
-// ================================
-// REPORT STATS GRID
-// ================================
 
 .report-stats-grid {
   display: grid;
@@ -1710,9 +1641,6 @@ nav a:hover:before {
 }
 
 
-// ================================
-// REPORT PREVIEW RESPONSIVE DESIGN
-// ================================
 
 @media (max-width: 1024px) {
   .report-flow {
@@ -1878,9 +1806,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// BENEFITS SECTION STYLING
-// ================================
 
 .benefits-section {
   width: 100%;
@@ -1912,9 +1837,6 @@ nav a:hover:before {
 }
 
 
-// ================================
-// BENEFITS GRID & CARDS
-// ================================
 
 .benefits-grid {
   display: grid;
@@ -1974,9 +1896,6 @@ nav a:hover:before {
   margin: 0;
 }
 
-// ================================
-// BENEFITS RESPONSIVE DESIGN
-// ================================
 
 @media (max-width: 1024px) {
   .benefits-grid {
@@ -2079,9 +1998,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// FAQ SECTION STYLING
-// ================================
 
 .faq-section {
   width: 100%;
@@ -2104,9 +2020,6 @@ nav a:hover:before {
   letter-spacing: -0.5px;
 }
 
-// ================================
-// FAQ LIST & ITEMS
-// ================================
 
 .faq-list {
   display: flex;
@@ -2183,9 +2096,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// FAQ RESPONSIVE DESIGN
-// ================================
 
 @media (max-width: 768px) {
   .faq-section {
@@ -2275,9 +2185,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// CTA SECTION STYLING
-// ================================
 
 .cta-section {
   width: 100%;
@@ -2321,9 +2228,6 @@ nav a:hover:before {
   opacity: 0.95;
 }
 
-// ================================
-// FOOTER STYLING
-// ================================
 
 .footer {
   width: 100%;
@@ -2425,9 +2329,6 @@ nav a:hover:before {
   }
 }
 
-// ================================
-// FOOTER BOTTOM
-// ================================
 
 .footer-bottom {
   max-width: 1200px;
@@ -2453,9 +2354,6 @@ nav a:hover:before {
   font-weight: 400;
 }
 
-// ================================
-// FOOTER RESPONSIVE DESIGN
-// ================================
 
 @media (max-width: 1024px) {
   .footer-container {

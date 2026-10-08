@@ -1,4 +1,4 @@
-const mongoose = require("mongoose") // Import Mongoose to interact with MongoDB
+const mongoose = require("mongoose")
 
 
 async function connectToDB(){

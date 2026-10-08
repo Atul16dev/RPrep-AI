@@ -5,46 +5,6 @@ const historyRetentionDays = Number.isFinite(configuredRetentionDays) && configu
     ? configuredRetentionDays
     : 30;
 
-/**
- * Interview Report Schema
- *
- * - candidateName: string
- * - position: string
- * - interviewerFeedback: string
- * - matchScore: number (0-100)
- *
- * - Technical Questions: [
- *   {
- *     question: string,
- *     intention: string,
- *     answer: string
- *   }
- * ]
- *
- * - Behavioral Questions: [
- *   {
- *     question: string,
- *     intention: string,
- *     answer: string
- *   }
- * ]
- *
- * - Skill Gaps: [
- *   {
- *     skill: string,
- *     severity: "low" | "medium" | "high"
- *   }
- * ]
- *
- * - Preparation Plan: [
- *   {
- *     day: number,
- *     focus: string,
- *     tasks: [string]
- *   }
- * ]
- */
-
 const technicalQuestionSchema = new mongoose.Schema(
     {
         question: {
@@ -162,10 +122,6 @@ const preparationPlanSchema = new mongoose.Schema(
 
 
 
-// Mongoose Schema:
-// Defines the structure, data types, and validation rules
-// for interview report documents stored in MongoDB.
-
 const interviewReportSchema = new mongoose.Schema(
     {
         candidateName: {
@@ -227,6 +183,7 @@ const interviewReportSchema = new mongoose.Schema(
 );
 
 interviewReportSchema.index({ user: 1, createdAt: -1 });
+// MongoDB's TTL monitor removes reports after the configured retention interval.
 interviewReportSchema.index(
     { createdAt: 1 },
     { expireAfterSeconds: historyRetentionDays * 24 * 60 * 60 }

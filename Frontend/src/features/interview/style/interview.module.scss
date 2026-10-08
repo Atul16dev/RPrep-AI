@@ -47,7 +47,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
   font-size: 0.9rem;
 }
 
-// ---- Topbar ----
 .topbar {
   width: min(1180px, 100%);
   margin-inline: auto;
@@ -134,7 +133,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
   }
 }
 
-// ---- Hero ----
 .hero {
   width: min(1180px, 100%);
   margin-inline: auto;
@@ -236,7 +234,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
   font-size: 0.78rem;
 }
 
-// ---- Score dial ----
 .dial {
   display: flex;
   flex-direction: column;
@@ -296,7 +293,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
   &.low { color: $red; background: rgba($red, 0.12); }
 }
 
-// ---- Feedback panel ----
 .feedbackPanel {
   width: min(1180px, 100%);
   margin-inline: auto;
@@ -341,7 +337,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
   overflow-wrap: anywhere;
 }
 
-// ---- Layout ----
 .sectionStack {
   width: min(1180px, 100%);
   margin-inline: auto;
@@ -454,7 +449,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
 .chipPurple { background: rgba($purple, 0.15); color: $purple; }
 .chipPink { background: rgba($pink, 0.15); color: $pink; }
 
-// ---- Question cards ----
 .qStack {
   display: grid;
   gap: 1.35rem;
@@ -559,7 +553,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
   color: rgba($paper, 0.75);
 }
 
-// ---- Skill gaps ----
 .gapList {
   list-style: none;
   margin: 0 0 1.35rem;
@@ -652,7 +645,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
   line-height: 1.5;
 }
 
-// ---- Preparation plan ----
 .planList {
   list-style: none;
   margin: 0;
@@ -727,7 +719,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
   line-height: 1.65;
 }
 
-// ---- Footer ----
 .disclaimer {
   width: min(1180px, 100%);
   margin-inline: auto;
@@ -739,7 +730,6 @@ $font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
   padding-top: 0.5rem;
 }
 
-// ---- Download style chooser ----
 .downloadOverlay {
   position: fixed;
   inset: 0;

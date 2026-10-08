@@ -1,9 +1,11 @@
 import axios from "axios"
 
+// In production, an empty base URL keeps /api requests on the frontend origin.
 const apiBaseURL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:3000" : "")
 
 const api = axios.create({
     baseURL: apiBaseURL,
+    // Include the HttpOnly session cookie in browser requests.
     withCredentials: true
 })
 

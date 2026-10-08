@@ -54,7 +54,6 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-container">
-        {/* Logo & Branding */}
         <div className="footer-branding">
           <div className="footer-logo">
             <img className="brand-logo-image" src="/logo.png" alt="RPrep AI logo" />
@@ -63,7 +62,6 @@ export default function Footer() {
           <p className="footer-tagline">AI-powered interview preparation.</p>
         </div>
 
-        {/* Navigation Links */}
         <div className="footer-links-group">
           <h4 className="footer-heading">Explore</h4>
           <ul className="footer-links">
@@ -80,7 +78,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* User Actions */}
         <div className="footer-links-group">
           <h4 className="footer-heading">Account</h4>
           <ul className="footer-links">
@@ -132,8 +129,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Copyright */}
-      {/* Copyright & Attribution */}
       <div className="footer-bottom">
         <p className="footer-copyright">
           &copy; {currentYear} RPrep AI. All rights reserved.

@@ -9,12 +9,6 @@ const standardFontDataUrl = pathToFileURL(
     path.join(__dirname, "../../node_modules/pdfjs-dist/standard_fonts/")
 ).href
 
-/** 
- * @route POST /api/interview
- * @description generate new interview report based of user resume, self description and job description
- * @access private
-*/
-
 async function generateInterviewReportController(req,res) {
     try {
         if (!req.file) {
@@ -25,6 +19,7 @@ async function generateInterviewReportController(req,res) {
             return res.status(400).json({ message: "Only PDF resumes are supported" })
         }
 
+        // Parse the uploaded PDF directly from memory; only its extracted text is stored with the report.
         const resumeContent = await (new pdfParse.PDFParse({
             data: Uint8Array.from(req.file.buffer),
             standardFontDataUrl
@@ -64,11 +59,6 @@ async function generateInterviewReportController(req,res) {
     }
 }
 
-/**
- * @route GET /api/interview/:interviewId
- * @description get interview report by id
- * @access private
- */
 async function getInterviewReportByIdController(req, res) {
     const { interviewId } = req.params
 
@@ -92,10 +82,6 @@ async function getInterviewReportByIdController(req, res) {
         res.status(503).json({ message: "Interview report is temporarily unavailable" })
     }
 }
-
-/**
- * @description get interview report in pdf format
- */
 
 async function getAllInterviewReportsController(req,res){
     const page = Math.max(Number.parseInt(req.query.page, 10) || 1, 1)

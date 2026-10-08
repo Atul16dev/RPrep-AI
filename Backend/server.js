@@ -1,6 +1,5 @@
-//Load environment variables from .env
 require("dotenv").config()
-const app = require("./src/app") // Import the Express application from app.js
+const app = require("./src/app")
 const connectToDB = require("./src/config/database")
 
 

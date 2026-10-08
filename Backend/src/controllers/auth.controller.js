@@ -14,7 +14,7 @@ const nodemailer = require("nodemailer");
 const pendingRegistrationModel = require("../models/pendingRegistration.model");
 const passwordResetModel = require("../models/passwordReset.model");
 
-// Helper function to upload to Cloudinary
+// Stream the in-memory image buffer to Cloudinary without creating a local temporary file.
 async function uploadToCloudinary(buffer, userId) {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
@@ -48,7 +48,6 @@ async function updateProfileController(req, res) {
       });
     }
 
-    // Validate displayName if provided
     if (displayName !== undefined) {
       if (typeof displayName !== "string") {
         return res.status(400).json({
@@ -75,7 +74,6 @@ async function updateProfileController(req, res) {
 
     let newPhotoURL = user.photoURL;
 
-    // Handle file upload to Cloudinary
     if (req.file) {
       try {
         if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
@@ -84,7 +82,6 @@ async function updateProfileController(req, res) {
           });
         }
 
-        // Upload to Cloudinary
         const uploadResult = await uploadToCloudinary(
           req.file.buffer,
           userId
@@ -99,7 +96,6 @@ async function updateProfileController(req, res) {
       }
     }
 
-    // Update user document
     if (displayName !== undefined) {
       user.displayName = displayName.trim();
     }
@@ -186,6 +182,7 @@ async function googleLoginController(req, res) {
     });
   }
 
+  // Verify the token for this application's OAuth client before trusting its identity claims.
   const ticket = await googleClient.verifyIdToken({
     idToken: credential,
     audience: process.env.GOOGLE_CLIENT_ID,
@@ -227,6 +224,7 @@ async function googleLoginController(req, res) {
     { expiresIn: "1d" }
   );
 
+  // Keep the JWT inaccessible to client-side scripts and require HTTPS in production.
   res.cookie("token", token, {
     httpOnly: true,
     sameSite: "lax",
@@ -259,8 +257,7 @@ async function forgotPasswordController(req, res) {
     email: normalizedEmail,
   });
 
-  // Same response rakha gaya hai, taaki koi email check karke
-  // ye discover na kar sake ki account exist karta hai ya nahi.
+  // Use the same response for unknown addresses to prevent account enumeration.
   if (!user) {
     return res.status(200).json({
       message: "If this email exists, a password reset OTP has been sent",
@@ -269,6 +266,7 @@ async function forgotPasswordController(req, res) {
 
   const otp = crypto.randomInt(100000, 1000000).toString();
 
+  // Persist only the hash; the one-time code is sent to the user's email.
   const otpHash = crypto
     .createHash("sha256")
     .update(otp)
@@ -350,6 +348,7 @@ async function resetPasswordController(req, res) {
   }
 
   if (resetRequest.attempts >= 5) {
+    // Remove the challenge after five recorded failures to prevent further guesses.
     await passwordResetModel.deleteOne({
       _id: resetRequest._id,
     });
@@ -394,12 +393,6 @@ async function resetPasswordController(req, res) {
     message: "Password reset successfully",
   });
 }
-
-/**
- * @name registerUserController
- * @description register a new user, expects username, email and password
- * @access Public
- */
 
 async function registerUserController(req, res) {
   const { username, email, password } = req.body;
@@ -454,6 +447,7 @@ async function registerUserController(req, res) {
 
   const otp = crypto.randomInt(100000, 1000000).toString();
 
+  // Persist only the hash; the one-time code is sent to the user's email.
   const otpHash = crypto
     .createHash("sha256")
     .update(otp)
@@ -497,6 +491,7 @@ async function resendRegistrationOtpController(req, res) {
   }
 
   const otp = crypto.randomInt(100000, 1000000).toString();
+  // Persist only the hash; the one-time code is sent to the user's email.
   const otpHash = crypto
     .createHash("sha256")
     .update(otp)
@@ -547,6 +542,7 @@ async function verifyRegistrationOtpController(req, res) {
   }
 
   if (pendingRegistration.attempts >= 5) {
+    // Remove the challenge after five recorded failures to prevent further guesses.
     await pendingRegistrationModel.deleteOne({
       _id: pendingRegistration._id,
     });
@@ -590,12 +586,6 @@ async function verifyRegistrationOtpController(req, res) {
   });
 }
 
-/**
- * @name loginUserController
- * @description login a user, expects username and password in the request body
- * @access Public
- */
-
 async function loginUserController(req, res) {
     const { email, password} = req.body
 
@@ -621,6 +611,7 @@ async function loginUserController(req, res) {
         { expiresIn: "1d"}
     )
 
+    // Keep the JWT inaccessible to client-side scripts and require HTTPS in production.
     res.cookie("token", token, {
         httpOnly: true,
         sameSite: "lax",
@@ -641,17 +632,10 @@ async function loginUserController(req, res) {
 
 }
 
-/**
- * @name logoutUserController
- * @description logout a user, expects token in the request cookie
- * @access Public
- */
-
 async function logoutUserController(req,res) {
     const token = req.cookies.token
 
     if(token){
-        //add in blacklist
         await tokenBlacklistModel.create({ token })
     }
 
@@ -661,12 +645,6 @@ async function logoutUserController(req,res) {
         message: "User logged out successfully"
     })
 }
-
-/**
- * @name getMeController
- * @description get the current logged in user details.
- * @access Private
- */
 
 async function getMeController(req,res) {
     const user = await userModel.findById(req.user.id)

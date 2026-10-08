@@ -164,8 +164,6 @@ const Home = () => {
       </div>
 
       <div className="interview-layout">
-        {/* LEFT PART */}
-
         <div className="dashboard-hero">
           <div className="ai-badge">
             <Sparkles size={16} />
@@ -224,10 +222,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-
-        {/* LEFT PART END HERE */}
-
-        {/* RIGHT PART */}
 
         <div
           className="interview-input-group"
@@ -383,7 +377,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* RIGHT PART END HERE */}
       </div>
     </main>
   );

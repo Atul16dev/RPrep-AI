@@ -28,13 +28,6 @@ import {
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-/* ------------------------------------------------------------------
- * Generated report page
- * ------------------------------------------------------------------ */
-
-/* ------------------------------------------------------------------
- * Helpers
- * ------------------------------------------------------------------ */
 function scoreBand(score) {
   if (score >= 80) return "good";
   if (score >= 60) return "mid";
@@ -43,22 +36,17 @@ function scoreBand(score) {
 
 const MATCH_LABEL = { good: "Strong Match", mid: "Good Match", low: "Needs Review" };
 const SEVERITY_TO_BAND = { low: "good", medium: "mid", high: "low" };
-// Severity as filled segments out of 3 — gives the same "how bad is it"
-// read as the reference's mini progress bar, driven by real data
-// instead of a fabricated percentage.
+// Severity is categorical, so fixed segments communicate rank without implying a precise percentage.
 const SEVERITY_TO_SEGMENTS = { low: 1, medium: 2, high: 3 };
 
-// Your schema only stores `skill` + `severity`, not a description.
-// This turns severity into one honest, generic sentence rather than
-// inventing specifics the AI never actually said.
+// The report schema has no skill-gap description, so use generic guidance rather than inventing details.
 function gapHint(severity) {
   if (severity === "high") return "Priority area — address this before your next round.";
   if (severity === "medium") return "Worth focused practice ahead of your next interview.";
   return "Minor gap — a quick refresher should close it.";
 }
 
-// Picks an icon for a prep-plan day based on keywords in its focus
-// text, so the timeline doesn't need per-day icon data in the DB.
+// Derive the icon from focus text so the report schema does not need to store presentation metadata.
 function focusIcon(focus) {
   const f = focus.toLowerCase();
   if (f.includes("cloud") || f.includes("deploy")) return Cloud;
@@ -73,10 +61,6 @@ function formatTime(iso) {
   return new Date(iso).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 }
 
-/* ------------------------------------------------------------------
- * ScoreDial — gradient ring (blue → green → purple), matching the
- * reference's signature score card.
- * ------------------------------------------------------------------ */
 function ScoreDial({ score }) {
   const radius = 54;
   const circumference = 2 * Math.PI * radius;
@@ -119,10 +103,6 @@ function ScoreDial({ score }) {
   );
 }
 
-/* ------------------------------------------------------------------
- * QuestionCard — numbered Q&A block used in both technical and
- * behavioral columns.
- * ------------------------------------------------------------------ */
 function QuestionCard({ index, data, type }) {
   return (
     <div className={styles.qCard}>
@@ -178,9 +158,6 @@ function AccordionSection({ id, title, icon, iconClass, isOpen, onToggle, childr
   );
 }
 
-/* ------------------------------------------------------------------
- * InterviewReport — top level page
- * ------------------------------------------------------------------ */
 export default function InterviewReport() {
   const { id } = useParams();
   const location = useLocation();
@@ -200,6 +177,7 @@ export default function InterviewReport() {
   }
 
 
+  // Build a themed PDF containing the report summary and its structured sections.
   function downloadReport(style) {
   const pdf = new jsPDF();
   const pageWidth = pdf.internal.pageSize.getWidth();
@@ -581,7 +559,6 @@ export default function InterviewReport() {
         </div>
       )}
 
-      {/* ---- Hero: candidate info + score ---- */}
       <section className={styles.hero}>
         <div className={styles.heroInfo}>
           <span className={styles.eyebrow}>AI Interview Report</span>
@@ -614,7 +591,6 @@ export default function InterviewReport() {
         </div>
       </section>
 
-      {/* ---- AI feedback ---- */}
       <section className={styles.feedbackPanel}>
         <div className={styles.botIcon}>
           <Bot size={20} />
@@ -625,7 +601,6 @@ export default function InterviewReport() {
         </div>
       </section>
 
-      {/* ---- Technical / Behavioral questions ---- */}
       <div className={styles.sectionStack}>
         <AccordionSection
           id="technical-questions"
@@ -658,7 +633,6 @@ export default function InterviewReport() {
         </AccordionSection>
       </div>
 
-      {/* ---- Skill gaps / Preparation plan ---- */}
       <div className={styles.sectionStack}>
         <AccordionSection
           id="skill-gaps"

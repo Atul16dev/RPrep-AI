@@ -19,6 +19,8 @@ function questionSimilarity(first, second) {
     return union === 0 ? 1 : intersection / union
 }
 
+// Jaccard similarity over normalized words catches questions that differ only in phrasing.
+// The 0.8 threshold rejects near-duplicates while allowing distinct questions on related topics.
 function validateUniqueQuestions(questions, name) {
     for (let index = 0; index < questions.length; index++) {
         for (let otherIndex = index + 1; otherIndex < questions.length; otherIndex++) {
@@ -29,9 +31,7 @@ function validateUniqueQuestions(questions, name) {
     }
 }
 
-// Zod Schema:
-// Validates the actual AI response to ensure it matches the expected structure and data types.
-
+// Validate model output locally because the provider's response schema is not runtime validation.
 const interviweReportSchema = z.object({
 
     candidateName: z.string(),
@@ -83,9 +83,6 @@ const interviweReportSchema = z.object({
 
 
 
-// JSON Schema:
-// Defines the expected structure and data types of the AI response.
-// This schema is passed to Gemini to generate the output in the required format.
 
 const interviewReportJsonSchema = {
     type: "object",
@@ -244,6 +241,7 @@ const interviewReportJsonSchema = {
 };
 
 
+// Constrain the generated format, then validate the response locally before returning it.
 async function generateInterviewReport({resume, selfDescription, jobDescription}){
 
 
@@ -534,10 +532,8 @@ Before returning the response, verify that:
     }
 
 
-// Convert Gemini's JSON response string into a JavaScript object.
 const parsedResponse = JSON.parse(response.text);
 
-// Validate the parsed response using the Zod schema.
 const result = interviweReportSchema.parse(parsedResponse);
 validateUniqueQuestions(result.technicalQuestions, "Technical questions")
 validateUniqueQuestions(result.behavioralQuestions, "Behavioral questions")

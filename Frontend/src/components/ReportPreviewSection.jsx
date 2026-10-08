@@ -37,7 +37,6 @@ const reportStats = [
           Get actionable insights to know where you stand and how you can improve.
         </p>
 
-        {/* Steps with Arrows */}
         <div className="report-flow">
           {reportSteps.map((step, index) => {
             const IconComponent = step.icon;
@@ -60,7 +59,6 @@ const reportStats = [
           })}
         </div>
 
-        {/* Stats Grid */}
         <div className="report-stats-grid">
           {reportStats.map((stat, index) => (
   <div key={index} className="report-stat-box">

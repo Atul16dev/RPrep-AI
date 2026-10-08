@@ -233,7 +233,6 @@
 
         box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 
-        // width: min(900px, 90%);
 
         width: min(900px, 100%);
         flex: 1 1 0;
@@ -242,7 +241,6 @@
         box-sizing: border-box;
         border-radius: 1rem;
         padding: 2.5rem;
-        // margin-right: 2%;
     }
 
     .interview-input-group,
@@ -965,22 +963,18 @@
 }
 
 
-/* Create */
 .animated-title > span:nth-of-type(1) {
     animation-delay: 0.2s;
 }
 
-/* Your */
 .animated-title > span:nth-of-type(2) {
     animation-delay: 0.4s;
 }
 
-/* Custom */
 .animated-title > span:nth-of-type(3) {
     animation-delay: 0.6s;
 }
 
-/* Interview Plan */
 .animated-title > span:nth-of-type(4) {
     animation-delay: 0.8s;
 }

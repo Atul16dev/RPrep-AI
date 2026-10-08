@@ -1,21 +1,21 @@
 const multer = require("multer")
 
-// General upload with memory storage
+// Resume PDFs are parsed from memory rather than written to local temporary files.
 const upload = multer({
     storage: multer.memoryStorage(),
+    // Enforce upload limits before the application parses or uploads the files.
     limits: {
-        fileSize: 3*1024*1024 //3MB
+        fileSize: 3*1024*1024
     }
 })
 
-// Profile image upload with validation
 const profileImageUpload = multer({
     storage: multer.memoryStorage(),
+    // Keep profile image uploads bounded before they are forwarded to Cloudinary.
     limits: {
-        fileSize: 5*1024*1024 // 5MB for profile images
+        fileSize: 5*1024*1024
     },
     fileFilter: (req, file, cb) => {
-        // Allow only image file types
         const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
         
         if (!allowedMimes.includes(file.mimetype)) {
@@ -26,8 +26,6 @@ const profileImageUpload = multer({
     }
 })
 
-// Default export for backward compatibility with interview routes
 module.exports = upload
 
-// Named export for profile image upload
 module.exports.profileImageUpload = profileImageUpload
