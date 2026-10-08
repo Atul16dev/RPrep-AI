@@ -14,6 +14,14 @@ const nodemailer = require("nodemailer");
 const pendingRegistrationModel = require("../models/pendingRegistration.model");
 const passwordResetModel = require("../models/passwordReset.model");
 
+const isProduction = process.env.NODE_ENV === "production";
+const authCookieOptions = {
+  httpOnly: true,
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
+  path: "/",
+};
+
 // Stream the in-memory image buffer to Cloudinary without creating a local temporary file.
 async function uploadToCloudinary(buffer, userId) {
   return new Promise((resolve, reject) => {
@@ -224,12 +232,7 @@ async function googleLoginController(req, res) {
     { expiresIn: "1d" }
   );
 
-  // Keep the JWT inaccessible to client-side scripts and require HTTPS in production.
-  res.cookie("token", token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-  });
+  res.cookie("token", token, authCookieOptions);
 
   return res.status(200).json({
     message: "Google login successful",
@@ -611,12 +614,7 @@ async function loginUserController(req, res) {
         { expiresIn: "1d"}
     )
 
-    // Keep the JWT inaccessible to client-side scripts and require HTTPS in production.
-    res.cookie("token", token, {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
-    })
+    res.cookie("token", token, authCookieOptions)
 
     res.status(201).json({
         message: "User Loggedin successfully",
@@ -639,7 +637,7 @@ async function logoutUserController(req,res) {
         await tokenBlacklistModel.create({ token })
     }
 
-    res.clearCookie("token")
+    res.clearCookie("token", authCookieOptions)
 
     res.status(200).json({
         message: "User logged out successfully"

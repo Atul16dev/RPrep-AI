@@ -12,9 +12,18 @@ const configuredOrigins = process.env.CORS_ORIGIN
     .map((origin) => origin.trim())
     .filter(Boolean)
 
-// Credentialed browser requests are restricted to configured origins, with localhost as the fallback.
+if (configuredOrigins?.includes("*")) {
+    throw new Error("CORS_ORIGIN must contain explicit origins when credentials are enabled.")
+}
+
+const allowedOrigins = new Set([
+    ...(configuredOrigins || []),
+    "https://r-prep-ai.vercel.app",
+    ...(process.env.NODE_ENV === "production" ? [] : ["http://localhost:5173"])
+])
+
 app.use(cors({
-    origin: configuredOrigins?.length ? configuredOrigins : ["http://localhost:5173"],
+    origin: [...allowedOrigins],
     credentials: true
 }))
 
