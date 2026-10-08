@@ -1,0 +1,99 @@
+$loading-blue: #00c8ff;
+$loading-green: #34d399;
+$loading-paper: #f1f5f9;
+$loading-muted: #a9b8ca;
+
+.loading-screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 1.5rem;
+  padding: 2rem 1.25rem;
+  color: $loading-paper;
+  background:
+    radial-gradient(circle at 50% 38%, rgba($loading-blue, 0.11), transparent 19rem),
+    linear-gradient(115deg, #000 0%, #152331 100%);
+  text-align: center;
+}
+
+.loading-orbit {
+  width: 58px;
+  height: 58px;
+  position: relative;
+  border: 2px solid rgba($loading-blue, 0.2);
+  border-top-color: $loading-blue;
+  border-right-color: rgba($loading-green, 0.8);
+  border-radius: 50%;
+  animation: loading-spin 1s linear infinite;
+  box-shadow: 0 0 28px rgba($loading-blue, 0.16);
+}
+
+.loading-orbit-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  top: 3px;
+  left: 25px;
+  border-radius: 50%;
+  background: $loading-green;
+  box-shadow: 0 0 12px rgba($loading-green, 0.8);
+}
+
+.loading-copy {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+}
+
+.loading-kicker {
+  margin: 0;
+  color: $loading-blue;
+  font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.loading-copy h1 {
+  margin: 0;
+  font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  font-size: clamp(1.25rem, 3vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.loading-lines {
+  width: min(220px, 70vw);
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
+.loading-lines span {
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba($loading-blue, 0.25), rgba($loading-paper, 0.08), rgba($loading-blue, 0.25));
+  background-size: 220% 100%;
+  animation: loading-shimmer 1.5s ease-in-out infinite;
+}
+
+.loading-lines span:nth-child(2) { width: 82%; }
+.loading-lines span:nth-child(3) { width: 64%; }
+
+@keyframes loading-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes loading-shimmer {
+  0% { background-position: 100% 0; opacity: 0.55; }
+  50% { opacity: 1; }
+  100% { background-position: -100% 0; opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-orbit,
+  .loading-lines span { animation: none; }
+}
