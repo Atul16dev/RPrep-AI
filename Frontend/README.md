@@ -11,6 +11,8 @@ The frontend is a React application built with Vite. Run the API backend separat
 
 ## Production
 
-Set `VITE_API_URL` to the deployed backend origin before building, for example `https://api.example.com`. If the frontend and API share an origin, leave it empty and route `/api` to the backend through the hosting platform or reverse proxy.
+For Vercel deployments, configure `BACKEND_API_URL` in the Vercel project environment variables with the backend origin, for example `https://api.example.com` (do not append `/api`). Remove or leave `VITE_API_URL` empty so browser requests use the same-origin API proxy; this also allows the authentication cookie to work when the backend is hosted on a different domain. Redeploy after changing environment variables.
 
-Build with `npm run build`; the deployable static files are written to `dist`. The API must allow the deployed frontend origin through its `CORS_ORIGIN` setting and must use HTTPS when running in production.
+For other hosting platforms, set `VITE_API_URL` to the deployed backend origin before building. The backend must allow the deployed frontend origin through `CORS_ORIGIN` and must use HTTPS in production.
+
+Build with `npm run build`; the deployable static files are written to `dist`. Vercel serves `/api/*` through the proxy and rewrites client-side routes such as `/dashboard` to the app.

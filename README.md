@@ -226,7 +226,7 @@ Configure the frontend environment variables.
 
 `VITE_GOOGLE_CLIENT_ID` should use the same Google OAuth web client ID configured in the backend as `GOOGLE_CLIENT_ID`.
 
-For local development, `VITE_API_URL` can remain empty when the frontend is configured to use the local/shared API setup.
+For local development, leave `VITE_API_URL` empty to use the local API at `http://localhost:3000`. For Vercel, remove or leave `VITE_API_URL` empty and set `BACKEND_API_URL` in the Vercel project environment to the deployed backend origin (without `/api`); requests then use the same-origin proxy so browser cookie restrictions do not block authentication. Redeploy after changing environment variables.
 
 ### Start the Frontend
 
@@ -342,7 +342,7 @@ When the backend is hosted on a different origin, set:
 VITE_API_URL
 ```
 
-to the deployed API origin before running the production build.
+to the deployed API origin before running the production build on hosts other than Vercel. On Vercel, set `BACKEND_API_URL` to the backend origin instead, and leave `VITE_API_URL` empty.
 
 For a shared origin, `/api` can be routed to the backend while leaving `VITE_API_URL` empty.
 
@@ -369,7 +369,7 @@ Before deploying:
 5. Configure SMTP credentials.
 6. Configure Cloudinary credentials when profile photo uploads are enabled.
 7. Set `CORS_ORIGIN` to the deployed frontend origin.
-8. For a separate frontend/backend deployment, configure `VITE_API_URL` with the deployed backend API origin.
+8. For Vercel, set `BACKEND_API_URL` to the deployed backend origin and leave `VITE_API_URL` empty. For other separate frontend/backend deployments, set `VITE_API_URL` to the deployed backend API origin.
 9. Enable HTTPS for production traffic.
 
 ---
