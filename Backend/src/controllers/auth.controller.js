@@ -590,9 +590,16 @@ async function verifyRegistrationOtpController(req, res) {
 }
 
 async function loginUserController(req, res) {
-    const { email, password} = req.body
+    const { email, password } = req.body || {}
+    const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : ""
 
-    const user = await userModel.findOne({ email })
+    if (!normalizedEmail || typeof password !== "string" || !password) {
+        return res.status(400).json({
+            message: "Email and password are required"
+        })
+    }
+
+    const user = await userModel.findOne({ email: normalizedEmail })
 
     if(!user){
         return res.status(400).json({

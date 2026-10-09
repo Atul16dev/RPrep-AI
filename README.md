@@ -183,6 +183,8 @@ The API listens on `PORT`, which defaults to:
 3000
 ```
 
+The `/health` endpoint returns `200` when MongoDB is connected and `503` otherwise. Configure production hosting to use `/health` as its health-check path.
+
 For local development, the default allowed frontend origin is:
 
 ```text

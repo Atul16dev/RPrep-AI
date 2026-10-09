@@ -25,8 +25,6 @@ import {
   Moon,
   X,
 } from "lucide-react";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 
 function scoreBand(score) {
   if (score >= 80) return "good";
@@ -166,6 +164,7 @@ export default function InterviewReport() {
   const [loading, setLoading] = useState(true);
   const [openSections, setOpenSections] = useState({});
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
+  const [downloadError, setDownloadError] = useState("");
 
   function toggleSection(section) {
     setOpenSections((current) => ({ ...current, [section]: !current[section] }));
@@ -178,7 +177,22 @@ export default function InterviewReport() {
 
 
   // Build a themed PDF containing the report summary and its structured sections.
-  function downloadReport(style) {
+  async function downloadReport(style) {
+  let jsPDF;
+  let autoTable;
+
+  try {
+    [{ default: jsPDF }, { default: autoTable }] = await Promise.all([
+      import("jspdf"),
+      import("jspdf-autotable"),
+    ]);
+    setDownloadError("");
+  } catch (error) {
+    console.error("Unable to load PDF export tools:", error);
+    setDownloadError("PDF export is temporarily unavailable. Please try again.");
+    return;
+  }
+
   const pdf = new jsPDF();
   const pageWidth = pdf.internal.pageSize.getWidth();
   const isDark = style === "dark";
@@ -502,7 +516,10 @@ export default function InterviewReport() {
           <button
             type="button"
             className={styles.downloadBtn}
-            onClick={() => setDownloadModalOpen(true)}
+            onClick={() => {
+              setDownloadError("");
+              setDownloadModalOpen(true);
+            }}
           >
             <Download size={16} />
             Download Report
@@ -528,6 +545,7 @@ export default function InterviewReport() {
             </button>
             <span className={styles.modalEyebrow}>Download Report</span>
             <h2 id="download-report-title">Choose your report style</h2>
+            {downloadError && <p role="alert">{downloadError}</p>}
             <div className={styles.reportStyleGrid}>
               <button
                 type="button"

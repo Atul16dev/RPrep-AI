@@ -19,7 +19,9 @@ const profileImageUpload = multer({
         const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
         
         if (!allowedMimes.includes(file.mimetype)) {
-            return cb(new Error('Only JPEG, PNG, and WebP images are allowed'), false);
+            const error = new Error('Only JPEG, PNG, and WebP images are allowed');
+            error.status = 400;
+            return cb(error, false);
         }
         
         cb(null, true);

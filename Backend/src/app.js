@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
@@ -27,10 +28,39 @@ app.use(cors({
     credentials: true
 }))
 
+app.get("/health", (req, res) => {
+    const databaseConnected = mongoose.connection.readyState === 1
+
+    res.status(databaseConnected ? 200 : 503).json({
+        status: databaseConnected ? "ok" : "unavailable",
+        database: databaseConnected ? "connected" : "disconnected"
+    })
+})
+
 const authRouter = require("./routes/auth.routes")
 const interviewRouter = require("./routes/interview.routes")
  
 app.use("/api/auth", authRouter)
 app.use("/api/interview", interviewRouter)
+
+app.use("/api", (req, res) => {
+    res.status(404).json({ message: "API route not found" })
+})
+
+app.use((error, req, res, next) => {
+    if (res.headersSent) {
+        return next(error)
+    }
+
+    const status = error.statusCode || error.status
+        || (error.code === "LIMIT_FILE_SIZE" ? 413 : 500)
+    const message = status >= 500 ? "Internal server error" : error.message
+
+    if (status >= 500) {
+        console.error("Unhandled request error:", error)
+    }
+
+    return res.status(status).json({ message })
+})
 
 module.exports = app;
